@@ -28,7 +28,9 @@ for link in coinPages[0:5]:
     # Add title row with crypto name to data
     first_row = ['Year','Mid-Year','Year-End']
     title = soup.find('h1')
-    first_row.append(title.text.split()[0])
+    splitted = title.text.split()
+    splitted = splitted[0] + splitted[1]
+    first_row.append(splitted)
     data.append(first_row)
     # for each table row in all table rows get the data
     trows = soup.find_all('tr')
@@ -40,9 +42,35 @@ for link in coinPages[0:5]:
             rowList.append(td.text)
         data.append(rowList)
 
-# Adding data to csv file
+# Adding data to quotes.csv file
 with open('quotes.csv', 'w', encoding='UTF8', newline='') as f:
     writer = csv.writer(f)
 
     # write the data
     writer.writerows(data)
+
+# Preparing data for combo graph
+combo = []
+# first row
+first_row = []
+first_row.append(data[0][0])
+for i in range(len(data)):
+    if i % 14 == 0:
+        first_row.append(data[i][3])
+combo.append(first_row)
+# second row
+for r in range(13):
+    row = []
+    # year
+    row.append(data[r+1][0])
+    for c in range(len(data)):
+        if c % 14 == 0:
+            row.append(data[c+1+r][3])
+    combo.append(row)
+
+# Writing combo to combo.csv
+with open('combo.csv', 'w', encoding='UTF8', newline='') as f:
+    writer = csv.writer(f)
+
+    # write the data
+    writer.writerows(combo)
