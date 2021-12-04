@@ -1,11 +1,15 @@
 from bs4 import BeautifulSoup
 import csv  
 import requests
+import time
 
 """
 Used variables:
 coinPages: list containing html links to coin forecast pages
 """
+
+# Starting calculation of execution time
+start_time = time.time()
 
 # Get all websites with predictions
 with open('Long-Term Price Predictions 2021-2031.html', 'r') as fr:
@@ -18,12 +22,11 @@ coinPages = []
 for link in links:
     coinPages.append(link.get('href'))
 
-#coinPages = ['https://coinpriceforecast.com/bitcoin-forecast-2020-2025-2030', 'https://coinpriceforecast.com/ethereum-forecast-2020-2025-2030']
 # Per link get the coin forecast table
 # prepare list to host data
 data = []
 
-for link in coinPages[0:5]:
+for link in coinPages:
     soup = BeautifulSoup(requests.get(link).text, 'lxml')
     # Add title row with crypto name to data
     first_row = ['Year','Mid-Year','Year-End']
@@ -74,3 +77,5 @@ with open('combo.csv', 'w', encoding='UTF8', newline='') as f:
 
     # write the data
     writer.writerows(combo)
+
+print(time.time()-start_time)
