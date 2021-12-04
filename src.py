@@ -2,24 +2,22 @@ from bs4 import BeautifulSoup
 import csv  
 
 # Get all websites with predictions
-with open('Long-Term Price Predictions 2021-2031.html', 'r') as coins_list:
-    # read content of coins_list
-    coins = coins_list.read()
+with open('Long-Term Price Predictions 2021-2031.html', 'r') as fr:
+    # read and parse content of coins_list
+    coinsHtml = BeautifulSoup(fr, 'lxml')
 
-# parse content of coins
-coinsHtml = BeautifulSoup(coins, 'lxml')
 # get the list of links
 links = coinsHtml.main.div.div.find_all('a')
 for link in links:
     print(link.get('href'))
 
 
-with open('BITCOIN PRICE PREDICTION 2021 - 2025 - 2030.html', 'r') as html_file:
-    # read content of html_file
-    content = html_file.read()
 
-# parse content of content
-soup = BeautifulSoup(content, 'lxml')
+# Per link get the  coint forecast table
+
+with open('BITCOIN PRICE PREDICTION 2021 - 2025 - 2030.html', 'r') as fr:
+    # read and parse content of html_file
+    soup = BeautifulSoup(fr, 'lxml')
 
 # prepare list to host data
 data = []
