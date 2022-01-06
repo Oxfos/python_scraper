@@ -58,16 +58,17 @@ combo = []
 first_row = []
 first_row.append(data[0][0])
 for i in range(len(data)):
-    if i % 14 == 0:
+    if i % 13 == 0:
         first_row.append(data[i][3])
 combo.append(first_row)
 # second row
-for r in range(13):
+for r in range(12):
     row = []
     # year
     row.append(data[r+1][0])
+    # growth
     for c in range(len(data)):
-        if c % 14 == 0:
+        if c % 13 == 0:
             row.append(data[c+1+r][3])
     combo.append(row)
 
