@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import csv  
 import requests
 import time
+import datetime
 
 """
 Used variables:
@@ -46,7 +47,8 @@ for link in coinPages:
         data.append(rowList)
 
 # Adding data to quotes.csv file
-with open('quotes.csv', 'w', encoding='UTF8', newline='') as f:
+today = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+with open(f'quotes_{today}.csv', 'w', encoding='UTF8', newline='') as f:
     writer = csv.writer(f)
 
     # write the data
@@ -73,7 +75,7 @@ for r in range(12):
     combo.append(row)
 
 # Writing combo to combo.csv
-with open('combo.csv', 'w', encoding='UTF8', newline='') as f:
+with open(f'combo_{today}.csv', 'w', encoding='UTF8', newline='') as f:
     writer = csv.writer(f)
 
     # write the data
