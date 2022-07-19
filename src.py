@@ -12,7 +12,7 @@ coinPages: list containing html links to coin forecast pages
 # Starting calculation of execution time
 start_time = time.time()
 
-# Get all websites with predictions
+# Get all websites with predictions (using static webpage as a start)
 with open('Long-Term Price Predictions 2021-2031.html', 'r') as fr:
     # read and parse content of coins_list
     coinsHtml = BeautifulSoup(fr, 'lxml')
@@ -60,17 +60,17 @@ combo = []
 first_row = []
 first_row.append(data[0][0])
 for i in range(len(data)):
-    if i % 13 == 0:
+    if i % 14 == 0:                 # 14 = # rows between cryptos in 'combo'
         first_row.append(data[i][3])
 combo.append(first_row)
 # second row
-for r in range(12):
+for r in range(13):                 # 13 = # year rows
     row = []
     # year
     row.append(data[r+1][0])
     # growth
     for c in range(len(data)):
-        if c % 13 == 0:
+        if c % 14 == 0:             # 14 = # rows between cryptos in 'combo'
             row.append(data[c+1+r][3])
     combo.append(row)
 
